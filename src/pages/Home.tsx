@@ -48,7 +48,7 @@ export function Home() {
   return (
     <View style={styles.container}>
       <Text style={styles.title} testID="welcome">
-        Welcome, Erivaldo
+        Bem vindo, Erivaldo
       </Text>
 
       <Text style={{color: '#fff'}}>{gretting}</Text>
