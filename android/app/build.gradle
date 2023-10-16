@@ -88,6 +88,7 @@ def reactNativeArchitectures() {
     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
 
+apply from: "../../node_modules/@sentry/react-native/sentry.gradle"
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -132,14 +133,25 @@ android {
         debug {
             proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro" // detox
             signingConfig signingConfigs.debug
+              resValue "string", "CodePushDeploymentKey", '""'
+        }
+          releaseStaging {
+        
+            resValue "string", "CodePushDeploymentKey", '"rfr-Dch-RRYYKbcbtGDw5nHB4NjUcaInt1IX6"'
+
+            // Note: It is a good idea to provide matchingFallbacks for the new buildType you create to prevent build issues
+            // Add the following line if not already there
+            matchingFallbacks = ['release']
+        
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
          
-            // signingConfig signingConfigs.release
+            signingConfig signingConfigs.release // importante
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+              resValue "string", "CodePushDeploymentKey", '"k_3foULzJc3izD4t_GEWONsQQWtK49dryfxpD"'
         }
     }
 
@@ -182,3 +194,4 @@ dependencies {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
